@@ -2,7 +2,7 @@ import { Routes, Route, NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { Movies } from './movies/Movies';
 import { Header } from './header/Header';
-import { Home } from './home/Home';
+import Home from './home/Home';
 
 const StyledLink = styled(NavLink)`
   color: black;
