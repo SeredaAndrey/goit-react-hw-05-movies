@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import * as API from '../../components/api/API';
+import * as API from '../api/API';
 
-export default function Home() {
+export default function Layout() {
   const [Articles, setArticles] = useState([]);
 
   useEffect(() => {
@@ -10,7 +10,7 @@ export default function Home() {
   }, []);
 
   function fetchArticles() {
-    fetch(`${API.BASE_URL}trending/all/day?api_key=${API.API_KEY}`)
+    fetch(`${API.BASE_URL}/trending/all/day?api_key=${API.API_KEY}`)
       .then(response => response.json())
       .then(response => {
         setArticles(response.results);
