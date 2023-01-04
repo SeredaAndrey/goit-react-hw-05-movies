@@ -6,6 +6,7 @@ import {
   MovieDetailsCommonContainer,
   MovieDetailsContainer,
   MovieOverviewContainer,
+  ButtonContainer,
 } from './MovieDetails.styled';
 
 export default function MovieDetails() {
@@ -24,17 +25,25 @@ export default function MovieDetails() {
       })
       .catch(console.error());
   }
+  if (Articles.success === false)
+    return (
+      <MovieDetailsCommonContainer>
+        <NavLink to="/">go back</NavLink>
+        <MovieDetailsContainer>
+          <div>We don`t have any details for this movie</div>
+        </MovieDetailsContainer>
+      </MovieDetailsCommonContainer>
+    );
 
   const { original_title, poster_path, overview, vote_average, genres } =
     Articles;
-
-  const posterURL = `${API.POSTER_BASE_URL}${poster_path}`;
+  const imgURL = `${API.IMAGE_BASE_URL}${poster_path}`;
 
   return (
     <MovieDetailsCommonContainer>
       <NavLink to="/">go back</NavLink>
       <MovieDetailsContainer>
-        <img src={posterURL} alt={original_title} width="300" />
+        <img src={imgURL} alt={original_title} width="300" />
         <MovieOverviewContainer>
           <h2>{original_title}</h2>
           <p>User score {vote_average * 10}%</p>
@@ -48,8 +57,10 @@ export default function MovieDetails() {
         </MovieOverviewContainer>
       </MovieDetailsContainer>
       <h3>Additional information</h3>
-      <NavLink to="cast">Cast</NavLink>
-      <NavLink to="reviews">Reviews</NavLink>
+      <ButtonContainer>
+        <NavLink to="cast">Cast</NavLink>
+        <NavLink to="reviews">Reviews</NavLink>
+      </ButtonContainer>
       <Outlet />
     </MovieDetailsCommonContainer>
   );

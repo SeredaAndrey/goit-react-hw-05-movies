@@ -1,6 +1,13 @@
 import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import * as API from '../api/API';
+import {
+  LayoutContainer,
+  TrendingTitle,
+  TrendingList,
+  TrendingItem,
+  TrendingText,
+} from './Layout.styled';
 
 export default function Layout() {
   const [Articles, setArticles] = useState([]);
@@ -20,16 +27,23 @@ export default function Layout() {
   if (!Articles) return null;
 
   return (
-    <div>
-      <ul>
+    <LayoutContainer>
+      <TrendingTitle>Trending today</TrendingTitle>
+      <TrendingList>
         {Articles.map(({ id, name, title }) => {
           return (
-            <NavLink key={id} to={`movies/${id}`}>
-              <div>{name ? <p>{name}</p> : <p>{title}</p>}</div>
-            </NavLink>
+            <TrendingItem key={id}>
+              <NavLink to={`movies/${id}`}>
+                {name ? (
+                  <TrendingText>{name}</TrendingText>
+                ) : (
+                  <TrendingText>{title}</TrendingText>
+                )}
+              </NavLink>
+            </TrendingItem>
           );
         })}
-      </ul>
-    </div>
+      </TrendingList>
+    </LayoutContainer>
   );
 }

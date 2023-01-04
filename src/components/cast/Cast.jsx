@@ -2,6 +2,13 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import * as API from '../api/API';
+import {
+  CastContainer,
+  CastList,
+  CastItem,
+  CastTextB,
+  CastTextP,
+} from './Cast.styled';
 
 export default function Cast() {
   const [Articles, setArticles] = useState([]);
@@ -23,21 +30,27 @@ export default function Cast() {
   }
   if (!Articles) return null;
 
-  console.log(Articles);
-
   return (
-    <div>
-      <ul>
-        {Articles.map(({ name, character, id }) => {
+    <CastContainer>
+      <CastList>
+        {Articles.map(({ name, profile_path, character, id }) => {
           return (
-            <li key={id}>
-              <img src="" alt={name} width="100" />
-              <p>name</p>
-              <p>character</p>
-            </li>
+            <CastItem key={id}>
+              {profile_path && (
+                <img
+                  src={`${API.IMAGE_BASE_URL}${profile_path}`}
+                  alt={name}
+                  width="100"
+                />
+              )}
+              <CastTextB>name</CastTextB>
+              <CastTextP>{name}</CastTextP>
+              {character && <CastTextB>character</CastTextB>}
+              {character && <CastTextP>{character}</CastTextP>}
+            </CastItem>
           );
         })}
-      </ul>
-    </div>
+      </CastList>
+    </CastContainer>
   );
 }

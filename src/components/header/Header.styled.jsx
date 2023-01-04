@@ -6,9 +6,9 @@ export const HeaderNav = styled.header`
   align-items: center;
 
   height: 80px;
-  padding-left: 20px;
+  width: 650px;
 
-  margin: 0;
+  margin: 0 auto;
 
   background-color: grey;
 `;
@@ -27,6 +27,8 @@ export const HeaderNavItem = styled.li`
     padding: 12px 30px;
     border-radius: 5px;
     text-decoration: none;
+
+    text-transform: uppercase;
   }
 
   display: block;
@@ -37,6 +39,7 @@ export const HeaderNavItem = styled.li`
   list-style-type: none;
 
   :not(:last-child) {
+    margin-left: 20px;
     margin-right: 20px;
   }
   .active {
