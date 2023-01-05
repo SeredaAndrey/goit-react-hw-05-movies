@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useEffect } from 'react';
-import { useParams, Outlet, NavLink } from 'react-router-dom';
+import { useState, useEffect, Suspense } from 'react';
+import { useParams, Outlet, NavLink, useLocation } from 'react-router-dom';
 import * as API from '../api/API';
 import {
   MovieDetailsCommonContainer,
@@ -12,6 +12,7 @@ import {
 export default function MovieDetails() {
   const params = useParams();
   const [Articles, setArticles] = useState([]);
+  const location = useLocation();
 
   useEffect(() => {
     fetchArticles();
@@ -37,13 +38,18 @@ export default function MovieDetails() {
 
   const { original_title, poster_path, overview, vote_average, genres } =
     Articles;
-  const imgURL = `${API.IMAGE_BASE_URL}${poster_path}`;
+
+  const backLinkHref = location.state?.from ?? '/';
 
   return (
     <MovieDetailsCommonContainer>
-      <NavLink to="/">go back</NavLink>
+      <NavLink to={backLinkHref}>go back</NavLink>
       <MovieDetailsContainer>
-        <img src={imgURL} alt={original_title} width="300" />
+        <img
+          src={`${API.IMAGE_BASE_URL}${poster_path}`}
+          alt={original_title}
+          width="300"
+        />
         <MovieOverviewContainer>
           <h2>{original_title}</h2>
           <p>User score {vote_average * 10}%</p>
@@ -61,7 +67,9 @@ export default function MovieDetails() {
         <NavLink to="cast">Cast</NavLink>
         <NavLink to="reviews">Reviews</NavLink>
       </ButtonContainer>
-      <Outlet />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Outlet />
+      </Suspense>
     </MovieDetailsCommonContainer>
   );
 }

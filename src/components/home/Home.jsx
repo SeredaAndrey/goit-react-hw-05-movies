@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import * as API from '../api/API';
 import {
   LayoutContainer,
@@ -7,10 +7,11 @@ import {
   TrendingList,
   TrendingItem,
   TrendingText,
-} from './Layout.styled';
+} from './Home.styled';
 
-export default function Layout() {
+export default function Home() {
   const [Articles, setArticles] = useState([]);
+  const location = useLocation();
 
   useEffect(() => {
     fetchArticles();
@@ -33,7 +34,7 @@ export default function Layout() {
         {Articles.map(({ id, name, title }) => {
           return (
             <TrendingItem key={id}>
-              <NavLink to={`movies/${id}`}>
+              <NavLink to={`movies/${id}`} state={{ from: location }}>
                 {name ? (
                   <TrendingText>{name}</TrendingText>
                 ) : (

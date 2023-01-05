@@ -7,13 +7,13 @@ const navItem = [
   { href: 'movies', text: 'Movies' },
 ];
 
-export const Header = () => {
+const Header = () => {
   return (
     <HeaderNav>
       <HeaderNavList>
         {navItem.map(({ href, text }) => (
           <HeaderNavItem>
-            <NavLink to={href} key={href}>
+            <NavLink to={href} key={text}>
               {text}
             </NavLink>
           </HeaderNavItem>
@@ -22,3 +22,4 @@ export const Header = () => {
     </HeaderNav>
   );
 };
+export default Header;

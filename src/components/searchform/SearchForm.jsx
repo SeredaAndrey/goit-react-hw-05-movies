@@ -22,7 +22,7 @@ export default function SearchForm({ onSubmit }) {
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          autocomplete="off"
+          autoComplete="off"
           placeholder="Search movies"
           onChange={handleSearchValueChange}
           value={searchValue}

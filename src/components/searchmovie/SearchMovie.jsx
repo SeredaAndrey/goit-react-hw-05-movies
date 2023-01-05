@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import SearchForm from 'components/searchform/SearchForm';
 import { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation, useSearchParams } from 'react-router-dom';
 import * as API from '../api/API';
 import {
   SearchListContainer,
@@ -11,21 +11,21 @@ import {
 } from './SearchMovie.styled';
 
 export default function SearchMovie() {
-  const [searchValue, setSearchValue] = useState('');
   const [Articles, setArticles] = useState([]);
+  const location = useLocation();
+  const [serchParams, setSearchParams] = useSearchParams();
+  const filter = serchParams.get('filter') ?? '';
 
   useEffect(() => {
-    searchValue && fetchArticles();
-  }, [searchValue]);
+    filter && fetchArticles();
+  }, [filter]);
 
   const handleFormSubmit = searchVal => {
-    setSearchValue(searchVal);
+    setSearchParams(searchVal !== '' ? { filter: searchVal } : {});
   };
 
   function fetchArticles() {
-    fetch(
-      `${API.BASE_URL}/search/movie?api_key=${API.API_KEY}&query=${searchValue}`
-    )
+    fetch(`${API.BASE_URL}/search/movie?api_key=${API.API_KEY}&query=${filter}`)
       .then(response => response.json())
       .then(response => {
         setArticles(response.results);
@@ -41,7 +41,7 @@ export default function SearchMovie() {
             {Articles.map(({ id, name, title }) => {
               return (
                 <SearchingItem key={id}>
-                  <NavLink to={`../../movies/${id}`}>
+                  <NavLink to={`../../movies/${id}`} state={{ from: location }}>
                     {name ? (
                       <SearchigItemText>{name}</SearchigItemText>
                     ) : (
